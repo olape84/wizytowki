@@ -6,16 +6,19 @@ class Card:
         self.occupation=occupation
         self.email=email
     
+    def __str__(self) -> str:
+        return f'{self.name} {self.surname} {self.email}'
+
     @property #nie wiem czemu ale ten atrybut nie chce działać. robiłam na czuja - nie rozumiem całej tej koncepcji 
     def label_length (self):
         return self.label_length
     
     @label_length.setter
     def label_length (self):
-        return len(fake_name)
+        return len(fake.name())
         
 names= [
-    Card( 
+    Card( #nie rozumiem czemu wszystkie elementy z listy nazywaja sie tak samo tj Card- to są instancje klasy? dotrzeć można po atrybutach? 
         name="Edward A.",
         surname="Copland", 
         company_name= "Food Barn", 
@@ -57,7 +60,7 @@ for c in names:
 by_name = sorted(names,key=lambda c: c.name)
 by_surname = sorted(names,key=lambda c: c.surname)
 by_email = sorted(names,key=lambda c: c.email)
-print(by_name) #drukuje miejsce w pamięci nie imię i nie wiem dlaczego, czy rozwiązaniem jest metoda str?
+print(by_name) #drukuje miejsce w pamięci nie imię i nie wiem dlaczego, czy rozwiązaniem jest metoda __str__?
 print(by_surname)
 print(by_email)
 from faker import Faker
@@ -78,8 +81,8 @@ class Card:
     def contact():
         for i in range (10): #te warunki są chyba złe ale się zafiksowałam i nie widzę innego podejścia
             if BaseContact:
-                print("Wybieram numer telefonu: ",  fake.phone_number(), "i kontaktuje się z ", fake.name())
+                print("Wybieram numer telefonu: ", fake.phone_number(), "i kontaktuje się z ", fake.name())
             elif BusinessContact:
-                print("Wybieram numer telefonu: ",  business_phone_number(), "i kontaktuje się z ", fake.name())
+                print("Wybieram numer telefonu: ", fake.phone_number(), "i kontaktuje się z ", fake.name())
 Card.contact()
-Card.label_length() #nie ma atrybutu a przecież podałam go na początku więc o co chodzi?
+Card.label_length(fake.name()) #card nie ma atrubutu label_length, nie rozumiem dlaczego skoro powyżej go ustawiłam.. 
