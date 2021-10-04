@@ -1,3 +1,5 @@
+import random
+
 class Card:
     def __init__ (self, name, surname, company_name, occupation, email):
         self.name=name
@@ -9,16 +11,20 @@ class Card:
     def __str__(self) -> str:
         return f'{self.name} {self.surname} {self.email}'
 
-    @property #nie wiem czemu ale ten atrybut nie chce działać. robiłam na czuja - nie rozumiem całej tej koncepcji 
-    def label_length (self):
-        return self.label_length
+    __repr__ = __str__
     
-    @label_length.setter
+    def get_label_length (self):
+        return len(self.name) + len(self.surname) +1
+
+    @property  
     def label_length (self):
-        return len(fake.name())
-        
+        return get_label_length
+    
+    def contact():
+        random.choice([BaseContact, BusinessContact])() 
+
 names= [
-    Card( #nie rozumiem czemu wszystkie elementy z listy nazywaja sie tak samo tj Card- to są instancje klasy? dotrzeć można po atrybutach? 
+    Card(  
         name="Edward A.",
         surname="Copland", 
         company_name= "Food Barn", 
@@ -60,29 +66,25 @@ for c in names:
 by_name = sorted(names,key=lambda c: c.name)
 by_surname = sorted(names,key=lambda c: c.surname)
 by_email = sorted(names,key=lambda c: c.email)
-print(by_name) #drukuje miejsce w pamięci nie imię i nie wiem dlaczego, czy rozwiązaniem jest metoda __str__?
+print(by_name)
 print(by_surname)
 print(by_email)
 from faker import Faker
 fake= Faker()
 for i in range (10):
     print(fake.name())
-    print(fake.email()) #tu email nie zgadza się z imieniem. to ma znaczenie przy generowaniu przypadkowych danych? czy trzeba do pliku dodać?
+    print(fake.email()) 
 class BaseContact(Card):
-    def __init__(self, private_phone_number, *args, **kwargs): #numery tel sa dziwne
+    def __init__(self, private_phone_number, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.private_phone_number=private_phone_number
+    print("Wybieram prywatny numer telefonu: ",  fake.phone_number(), "i kontaktuje się z ", fake.name())
+
 class BusinessContact(Card):
     def __init__(self,business_phone_number, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.business_phone_number=business_phone_number
-print("Wybieram numer telefonu: ",  fake.phone_number(), "i kontaktuje się z ", fake.name())
-class Card: 
-    def contact():
-        for i in range (10): #te warunki są chyba złe ale się zafiksowałam i nie widzę innego podejścia
-            if BaseContact:
-                print("Wybieram numer telefonu: ", fake.phone_number(), "i kontaktuje się z ", fake.name())
-            elif BusinessContact:
-                print("Wybieram numer telefonu: ", fake.phone_number(), "i kontaktuje się z ", fake.name())
+    print("Wybieram służbowy numer telefonu: ",  fake.phone_number(), "i kontaktuje się z ", fake.name())
+    
 Card.contact()
-Card.label_length(fake.name()) #card nie ma atrubutu label_length, nie rozumiem dlaczego skoro powyżej go ustawiłam.. 
+Card.label_length() 
